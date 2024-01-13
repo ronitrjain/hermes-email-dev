@@ -1,0 +1,9 @@
+@font-face {
+  font-family: "HeaderFont";
+  src: url("/assets/fonts/PassionSansPDac-Light.ttf");
+}
+
+.header-text {
+  font-family: "HeaderFont";
+  color: black;
+}
