@@ -11,12 +11,13 @@ const Account = () => {
 
 
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
+  const [success, setSuccess] = useState("");
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [org_email, setOrgEmail] = useState("");
     const [org_password, setOrgPassword] = useState("");
+    const [service, setService] = useState("");
 
       const { update } = useSession();
 
@@ -24,6 +25,8 @@ const Account = () => {
     
 
   const { data: session, status } = useSession()
+
+  console.log(session)
 
    
 
@@ -39,10 +42,60 @@ const Account = () => {
         } else if (e.target.name === "email") {
             setEmail(e.target.value);
         }
+        else if (e.target.name === "organization_email_2") {
+            setOrgEmail(e.target.value);
+        }
+        else if (e.target.name === "corporation_password") {
+            setOrgPassword(e.target.value);
+        }
+        else if (e.target.name === "service") {
+            setService(e.target.value);
+            console.log('service is' + service)
+            
+        }
+
     }
     const onSubmitAuth = async (e) => {
 
         e.preventDefault();
+        if (
+            org_email.length === 0 ||
+            org_password.length === 0 ||
+            service.length === 0
+        ) {
+            setError("Fill all the fields properly.");
+            return;
+        }
+
+
+            await fetch("/api/emailAuth", {
+                body: JSON.stringify({
+                    email: org_email,
+                    password: org_password,
+                    user_id : session.user.id,
+                    service: service
+                }),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                method: "POST",
+            });
+
+
+            let session_user = session.user;
+        session_user.org_email = org_email;
+        session_user.corporation_password = org_password;
+        session_user.service = service;
+
+        
+
+
+        await update(session_user,  false);
+
+        setSuccess("You have successfully authenticated your email.");
+
+            
+        
     }
 
     const router = useRouter()
@@ -56,14 +109,14 @@ const Account = () => {
     if (session) {
         setUsername(session.user.username);
         setEmail(session.user.email);
-        setOrgEmail(session.user.organization_email);
+        setOrgEmail(session.user.org_email);
         setOrgPassword(session.user.corporation_password);
         document.getElementById("email").value = session.user.email;
         document.getElementById("username").value = session.user.username;
         document.getElementById("key").value = session.user.key;
         document.getElementById("organization").value = session.user.organization;
-        document.getElementById("organization_email").value = session.user.organization_email;
-        document.getElementById("organization_email_2").value = session.user.organization_email;
+        document.getElementById("organization_email").value = session.user.org_email;
+        document.getElementById("organization_email_2").value = session.user.org_email;
         document.getElementById("corporation_password").value = session.user.corporation_password;
 
     }
@@ -72,11 +125,10 @@ const Account = () => {
    
     }, [status])
 
-
     
-
-
 const onSubmitInfo = async (e) => {
+  console.log("service is" + service)
+  
         e.preventDefault();
         if (
             username.length === 0 ||
@@ -105,10 +157,12 @@ const onSubmitInfo = async (e) => {
         session_user.username = username;
         session_user.email = email;
 
+        console.log(session_user)
+
         
 
 
-        await update(session_user,  false);
+        await update(session_user);
 
 
         const result = await res.json();
@@ -119,20 +173,19 @@ const onSubmitInfo = async (e) => {
          
       
        }
-            setSuccess(true);
+            setSuccess("You have successfully updated your info.");
             //wait 3 seconds
-            setTimeout(() => {
-              signOut();
-            }
-            , 2000);
+        
 
 
 
            
         }
+
+
     
 
-
+let serviceValues = ["Gmail", "Yahoo", "Hotmail", "Mail.ru", "iCloud", "QQ", "Outlook", "Zoho", "Yandex", "SES", "Godaddy", "GodaddyAsia", "GodaddyEurope", "SendGrid", "AOL", "1und1", "FastMail", "Naver", "Postmark", "Mailjet", "Mailgun", "Sparkpost", "GandiMail", "DynectEmail", "Mandrill", "SendCloud", "QQex", "DebugMail.io", "hot.ee", "mail.ee"];
 
   return (
     <section id="skill" className="section experience-section">
@@ -173,44 +226,40 @@ const onSubmitInfo = async (e) => {
                         Update Info
                       </button>
 
-                      <span
-                      id="success_message"
-                      className="text-success mt-3"
-                      style={{ display: success ? "block" : "none" }}
-                    >
-                      Info Changed Successfully - You Will Be Redirected To Login Page
-                    </span>
+                      
             </form>
             </div>
 
-
-
-            
-
-
-            
-
-         
           </div>
            <div className="col-lg-6">
             <div className="row">
 <h3 className="mb-4 mt-4">Email Authentication</h3>
               <div className="form-group">
+                <form onSubmit={onSubmitAuth}>
 
             <label className="form-label mt-3">Organization Email</label>
-            <input  id="organization_email_2" name="organization_email_2" className="form-control mb-3" type="text" ></input>
+            <input onChange={(e)=>onChange(e)} id="organization_email_2" name="organization_email_2" className="form-control mb-3" type="text" ></input>
 
              <label className="form-label mt-3">Password</label>
-            <input  id="corporation_password" name="corporation_password" className="form-control mb-3" type="corporation_password" ></input>
+            <input onChange={(e)=>onChange(e)}  id="corporation_password" name="corporation_password" className="form-control mb-3" type="corporation_password" ></input>
 
- <button
-                        className="px-btn px-btn-theme2"
-                        type="submit"
-                        value="Send"
-                      >
+
+<label className="form-label mt-3">Service</label>
+            <select name="service" id="service" className="form-select mb-3" aria-label="Default select example" onChange={e=>onChange(e)}>
+  <option selected value=''>Select A Service</option>
+  {serviceValues.map((serviceItem, ) => (
+
+
+    <option  value={serviceItem}  >{serviceItem}</option>
+  ))}
+
+  </select>
+
+                  <button className="px-btn px-btn-theme2 mt-3" type="submit" value="Send">
                         
                         Test Auth
                       </button>
+                </form>
            
             </div>
 
@@ -222,6 +271,16 @@ const onSubmitInfo = async (e) => {
           </div>
          
         </div>
+
+        <div className="row d-flex justify-content-center align-items-center">
+          <span
+                      id="success_message"
+                      className="text-success mt-3"
+                     
+                    >
+                      {success}
+                    </span>
+                    </div>
       </div>
     </section>
   );

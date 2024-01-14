@@ -58,13 +58,14 @@ export default NextAuth({
   callbacks: {
     async jwt({ token, user, trigger, session }) {
       if(trigger==="update"){
-        token.username = session.user.username;
-        token.email = session.user.email;
-        token.id = session.user.id;
-        token.key = session.user.key;
-        token.org = session.user.organization;
-        token.org_email = session.user.organization_email;
-        token.corporation_password = session.user.corporation_password;
+        token.username = session.username;
+        token.email = session.email;
+        token.id = session.id;
+        token.key = session.key;
+        token.org = session.organization;
+        token.org_email = session.org_email;
+        token.corporation_password = session.corporation_password;
+        token.service = session.service;
         return token;
       }
       if (user) {
@@ -75,12 +76,13 @@ export default NextAuth({
         token.org = user.organization;
         token.org_email = user.org_email;
         token.corporation_password = user.corporation_password;
+        token.service = user.service;
       }
       return token;
     },
     async session({ session, token }) {
       if (token?.id) {
-        session.user = { id: token.id, username: token.username, email: token.email, key: token.key, organization: token.org, organization_email: token.org_email, corporation_password: token.corporation_password};
+        session.user = { id: token.id, username: token.username, email: token.email, key: token.key, organization: token.org, org_email: token.org_email, corporation_password: token.corporation_password, service: token.service};
       }
       return session;
     }
