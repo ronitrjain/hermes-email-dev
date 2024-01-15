@@ -59,9 +59,11 @@ const UserSchema = new Schema({ // Create a UserSchema
         type: String,
         enum: serviceValues,
         default: ""
+    },
+    logo: {
+        type: String,
+        default: ""
     }
-    
-    
 });
 
 UserSchema.methods.matchPassword = async function (enteredPassword) {

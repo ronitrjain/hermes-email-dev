@@ -26,7 +26,8 @@ export default async function handler(req, res) {
             org_email: company.corporation_email,
             organization: company.corporation,
             corporation_password:"",
-            service: ""
+            service: "",
+            logo: ""    
 
         })
         try {
