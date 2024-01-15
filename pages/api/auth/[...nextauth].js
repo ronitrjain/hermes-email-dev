@@ -66,6 +66,7 @@ export default NextAuth({
         token.org_email = session.org_email;
         token.corporation_password = session.corporation_password;
         token.service = session.service;
+        token.user_emails = session.user_emails;
         return token;
       }
       if (user) {
@@ -77,12 +78,13 @@ export default NextAuth({
         token.org_email = user.org_email;
         token.corporation_password = user.corporation_password;
         token.service = user.service;
+        token.user_emails = user.user_emails;
       }
       return token;
     },
     async session({ session, token }) {
       if (token?.id) {
-        session.user = { id: token.id, username: token.username, email: token.email, key: token.key, organization: token.org, org_email: token.org_email, corporation_password: token.corporation_password, service: token.service};
+        session.user = { id: token.id, username: token.username, email: token.email, key: token.key, organization: token.org, org_email: token.org_email, corporation_password: token.corporation_password, service: token.service, user_emails: token.user_emails};
       }
       return session;
     }

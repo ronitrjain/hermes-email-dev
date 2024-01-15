@@ -37,8 +37,8 @@ const Header = () => {
                   </a>
                 </li>
                 <li>
-                  <a className="nav-link" href="/templates">
-                    <span>Templates</span>
+                  <a className="nav-link" href="/create">
+                    <span>Create</span>
                   </a>
                 </li>
                 <li>

@@ -46,7 +46,7 @@ const UserSchema = new Schema({ // Create a UserSchema
     },
     user_emails:[
         {
-            type:String
+            type:Object
         }
     ],
     corporation_password: {

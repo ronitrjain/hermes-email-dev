@@ -11,13 +11,16 @@
   "dependencies": {
     "@next/font": "14.0.4",
     "bcryptjs": "^2.4.3",
+    "csv-parser": "^3.0.0",
     "emailjs-com": "^3.2.0",
+    "fs": "^0.0.1-security",
     "mongoose": "^8.0.4",
     "next": "14.0.4",
     "next-auth": "^4.24.5",
     "nodemailer": "^6.9.8",
     "react": "18.2.0",
     "react-bootstrap": "^1.6.1",
+    "react-csv-importer": "^0.8.1",
     "react-dom": "18.2.0",
     "swiper": "^9.2.0"
   }
