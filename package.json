@@ -26,6 +26,7 @@
     "react-csv-importer": "^0.8.1",
     "react-dnd": "^16.0.1",
     "react-dom": "18.2.0",
+    "react-quill": "^2.0.0",
     "swiper": "^9.2.0"
   }
 }

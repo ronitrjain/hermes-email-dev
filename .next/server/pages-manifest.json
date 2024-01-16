@@ -2,10 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/logos": "pages/logos.js",
-  "/api/setEmails": "pages/api/setEmails.js",
-  "/dashboard": "pages/dashboard.js",
-  "/login": "pages/login.js",
-  "/emails": "pages/emails.js",
+  "/create": "pages/create.js",
   "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js"
 }
