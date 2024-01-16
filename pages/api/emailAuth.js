@@ -18,9 +18,13 @@ export default async function handler(req, res) {
             return res.status(400).json({ error: "User not found." });
         }
 
+    
+
         user.org_email = email;
         user.corporation_password = password;
         user.service = service;
+
+        try{
 
         await user.save();
 
@@ -42,13 +46,17 @@ export default async function handler(req, res) {
 
         transporter.sendMail(mailOptions, function (err, data) {
             if (err) {
-                console.log("Error " + err);
+                return res.status(400).json({ error: "Error sending email." });
             } else {
-                console.log("Email sent successfully");
+                return res.status(200).json({ message: "Email verified." });
             }
         });
+    }
+    catch(error){
+        return res.status(400).json({ error: "Error sending email." });
+    }
 
-        return res.status(200).json({ message: "Email verified." });
+        
 
     } else {
 

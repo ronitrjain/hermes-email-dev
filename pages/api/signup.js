@@ -13,7 +13,7 @@ export default async function handler(req, res) {
 
         let company = await Corporation.findOne({ key: key })
         if (!company) {
-            return res.status(400).json({ success: false, data: "company not found" })
+            return res.status(400).json({ success: false, data: "Company not found" })
         }
 
 

@@ -14,6 +14,8 @@ const EmailUpload = () => {
 
     const [emails, setEmails] = useState([])
 
+    const {update} = useSession()
+
 
     
 
@@ -21,6 +23,7 @@ const EmailUpload = () => {
 
 
   const { data: session, status } = useSession()
+  const [error, setError] = useState("");
 
   console.log(session)
 
@@ -35,7 +38,10 @@ const EmailUpload = () => {
       return;
     }
 
+    console.log(session)
+
     if(session && session.user && session.user.user_emails){
+      console.log(session)
         setEmails(session.user.user_emails)
     }
 
@@ -45,7 +51,6 @@ const EmailUpload = () => {
 }, [status])    
 
 async function dataHandler(rows, { startIndex }) {
-    setEmails(rows)
     let response = await fetch("/api/setEmails", {
         method: "POST",
         body: JSON.stringify({emails:rows, id: session.user.id}),
@@ -54,7 +59,15 @@ async function dataHandler(rows, { startIndex }) {
         }
     })
 
-    console.log(response)
+    if(response.status == 200){
+        setEmails(rows)
+        setError("")
+        session.user.user_emails = rows;
+        update(session.user, false)
+    }
+    else{
+        setError("There was an error uploading the emails.")
+    }
 
   }
 
@@ -84,6 +97,8 @@ async function dataHandler(rows, { startIndex }) {
 </Importer>;
 
 <h3>Uploaded Emails</h3>
+
+<span className="text-danger">{error}</span>
 
 {emails.map((email) => (
     <p>{email.email}</p>

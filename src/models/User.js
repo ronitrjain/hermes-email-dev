@@ -32,7 +32,7 @@ const UserSchema = new Schema({ // Create a UserSchema
     email: {
         type:String, 
         required: true,
-        unique: false
+        unique: true
     },
     org_email: {
         type:String, 

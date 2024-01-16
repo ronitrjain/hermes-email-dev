@@ -24,9 +24,9 @@ export default async function handler(req, res) {
 
         try {
             await user.save();
-            return res.status(200).json({ success: true, data: user });
+            return res.status(200).json({ success: true, data: "It was successfully updated." });
         } catch (err) {
-            return res.status(400).json({ success: false, data: err });
+            return res.status(400).json({ success: false, data: "There might be an account with this info already. Try other credentials." });
         }
     } else {
         return res.status(400).json({ success: false, data: "not a post request" });

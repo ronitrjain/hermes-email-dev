@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import SectionTitle from "./SectionTitle";
-import { useSession } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
 import { useRouter } from 'next/navigation'
 
 const Register = () => {
@@ -81,7 +81,16 @@ const Register = () => {
             }
 
             setSuccess("Success! Redirecting to login page");
-            window.location.href = "/login";
+             let status =await signIn("credentials", {
+        email: email,
+        password: password,
+        callbackUrl: `/dashboard`,
+      redirect:false     } )
+    if(status.error){ 
+        setError(true);
+        return;
+    }
+
 
             return;
 

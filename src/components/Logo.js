@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { set } from "mongoose";
 
 
 
@@ -15,6 +16,8 @@ const Logo = () => {
   const { data: session, status } = useSession()
       const [file, setFile] = useState();
             const { update } = useSession();
+            const [error, setError] = useState("");
+            const [success, setSuccess] = useState("");
 
 
        async function handleUpload(e) {
@@ -24,13 +27,25 @@ const Logo = () => {
           imageData.append('logo', e.target.files[0])
           imageData.append('id', session.user.id)
 
+          try{
+
       let data = await fetch('http://localhost:4000/api/logo_upload', {
         method: 'POST',
         body: imageData
       })
+      if(data.status == 200){
       data = await data.json()
+      }else{
+        setError("There was an error uploading your logo. Please try again.")
+      setSuccess("")
 
-      await fetch('/api/logo', {
+        return;
+      }
+
+      
+
+
+      let res = await fetch('/api/logo', {
         method: 'POST',
         body: JSON.stringify({logo: data.image_destination, id: session.user.id}),
         headers: {
@@ -38,10 +53,27 @@ const Logo = () => {
         }
       })
 
+      if(res.status == 200){
+
       session.user.logo = data.image_destination;
 
       update(session.user, false);
+      setError("")
+      setSuccess("Logo successfully uploaded.")
+      }
+      else{
+        setError("There was an error uploading your logo. Please try again.")
+        setSuccess("")
+        return;
+      }
 
+    }
+    catch(e){
+      setError("There was an error uploading your logo. Please try again.")
+      setSuccess("")
+      return;
+    }
+      
 
     }
 
@@ -74,7 +106,7 @@ const Logo = () => {
         <div className="col-12">
           <div className="form-group">
             <label htmlFor="image_upload" className="h3 my-3">Add Image:</label>
-            <input className="form-control" id="image_upload" type="file" onChange={handleUpload} />
+            <input accept="image/*" className="form-control" id="image_upload" type="file" onChange={handleUpload} />
           </div>
         </div>
       </div>
@@ -84,6 +116,9 @@ const Logo = () => {
           <div className="mt-2">
             <img src={file} className="img-fluid" style={{maxWidth: "10%", height: "auto"}} alt="Current Logo" />
           </div>
+          <span className="text-danger">{error}</span>
+           <span className="text-success">{success}</span>
+
         </div>
       </div>
   </section>

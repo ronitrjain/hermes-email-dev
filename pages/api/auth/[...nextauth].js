@@ -32,7 +32,8 @@ export default NextAuth({
                 });
         }
         catch(err){
-          console.log(err)
+          
+
         }
       
 

@@ -26,7 +26,6 @@ const Account = () => {
 
   const { data: session, status } = useSession()
 
-  console.log(session)
 
    
 
@@ -50,7 +49,6 @@ const Account = () => {
         }
         else if (e.target.name === "service") {
             setService(e.target.value);
-            console.log('service is' + service)
             
         }
 
@@ -64,11 +62,19 @@ const Account = () => {
             service.length === 0
         ) {
             setError("Fill all the fields properly.");
+            setSuccess("");
             return;
         }
 
+           setSuccess("");
 
-            await fetch("/api/emailAuth", {
+
+           //change test_button text to loading
+            document.getElementById("test_button").innerHTML = "Loading...";
+
+
+
+            let response = await fetch("/api/emailAuth", {
                 body: JSON.stringify({
                     email: org_email,
                     password: org_password,
@@ -80,6 +86,19 @@ const Account = () => {
                 },
                 method: "POST",
             });
+          document.getElementById("test_button").innerHTML = "Test Auth";
+
+
+        
+
+            if (response.status == 400) {
+                setError("Invalid Credentials");
+                setSuccess("");
+                return;
+            }
+            else{
+
+
 
 
             let session_user = session.user;
@@ -93,6 +112,9 @@ const Account = () => {
         await update(session_user,  false);
 
         setSuccess("You have successfully authenticated your email.");
+        setError("");
+        return ;
+            }
 
             
         
@@ -127,7 +149,6 @@ const Account = () => {
 
     
 const onSubmitInfo = async (e) => {
-  console.log("service is" + service)
   
         e.preventDefault();
         if (
@@ -135,9 +156,13 @@ const onSubmitInfo = async (e) => {
             email.length === 0 
         ) {
             setError("Fill all the fields properly.");
+           setSuccess("");
+
             return;
         }
         setError("");
+
+        //set
 
 
         const res = await fetch("/api/updateUser", {
@@ -153,13 +178,18 @@ const onSubmitInfo = async (e) => {
             method: "POST",
         });
 
+        if(res.status ==400){
+            setError("There might be an account with this info already. Try other credentials.");
+            setSuccess("");
+            return;
+        }
+
         let session_user = session.user;
         session_user.username = username;
         session_user.email = email;
 
-        console.log(session_user)
 
-        
+
 
 
         await update(session_user);
@@ -167,14 +197,17 @@ const onSubmitInfo = async (e) => {
 
         const result = await res.json();
 
-        if (result.error) {
-            setError(result.error);
+        if (result.status == 400) {
+            setError("There might be an account with this info already. Try other credentials.");
+            setSuccess("");
+
         } else {
+           setSuccess("You have successfully updated your info.");
+            setError("");
          
       
        }
-            setSuccess("You have successfully updated your info.");
-            //wait 3 seconds
+           
         
 
 
@@ -255,7 +288,7 @@ let serviceValues = ["Gmail", "Yahoo", "Hotmail", "Mail.ru", "iCloud", "QQ", "Ou
 
   </select>
 
-                  <button className="px-btn px-btn-theme2 mt-3" type="submit" value="Send">
+                  <button id="test_button" className="px-btn px-btn-theme2 mt-3" type="submit" value="Send">
                         
                         Test Auth
                       </button>
@@ -279,6 +312,14 @@ let serviceValues = ["Gmail", "Yahoo", "Hotmail", "Mail.ru", "iCloud", "QQ", "Ou
                      
                     >
                       {success}
+                    </span>
+                      <span
+                      id="error_message"
+                      className="text-danger mt-3"
+                     
+                    >
+                      
+                      {error}
                     </span>
                     </div>
       </div>

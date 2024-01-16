@@ -21,7 +21,6 @@ const Login = () => {
 
 
     const [error, setError] = useState(false);
-    const [success, setSuccess] = useState(false);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -41,15 +40,25 @@ const Login = () => {
       setError(true);
       return;
     }
+
+
+   
     
    
     let status =await signIn("credentials", {
         email: email,
         password: password,
         callbackUrl: `/dashboard`,
-      redirect:true     } )
+      redirect:false     } )
+    if(status.error){ 
+        setError(true);
+        return;
+    }
+
+
+
       
-       }
+      }
 
 
   const onChange = (e) => {
@@ -133,10 +142,10 @@ const Login = () => {
                       </div>
                     <span
                       id="suce_message"
-                      className="text-success"
-                      style={{ display: success ? "block" : "none" }}
+                      className="text-danger"
+                      style={{ display: error ? "block" : "none" }}
                     >
-                      Message Sent Successfully
+                      Wrong email or password
                     </span>
                   </div>
                   <div className="col-md-12">
