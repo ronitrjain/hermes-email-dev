@@ -3,7 +3,7 @@ import User from "@/src/models/User";
 import nodemailer from "nodemailer";
 
 export default async function handler(req, res) {
-    await mongoose.connect('mongodb://127.0.0.1:27017/hermes-email')
+    await mongoose.connect(process.env.MONGO_URI)
     const { method } = req;
     if (method === "POST") {
         const { email, password, user_id, service } = req.body;

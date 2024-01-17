@@ -25,7 +25,7 @@ export default NextAuth({
         let client = null;
 
         try{
-          client = await MongoClient.connect('mongodb://127.0.0.1:27017/hermes-email',  { useNewUrlParser: true, useUnifiedTopology: true })
+          client = await MongoClient.connect(process.env.MONGO_URI,  { useNewUrlParser: true, useUnifiedTopology: true })
           const users =  client.db().collection('users');
           user = await users.findOne({
                     email:email

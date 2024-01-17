@@ -4,7 +4,7 @@ import User from '@/src/models/User.js';
 import Corporation from '@/src/models/Corporation';
 import bcrypt from 'bcryptjs';
 export default async function handler(req, res) {
-    await mongoose.connect('mongodb://127.0.0.1:27017/hermes-email')
+    await mongoose.connect(process.env.MONGO_URI)
 
     const { method } = req
     if (method === 'POST') {

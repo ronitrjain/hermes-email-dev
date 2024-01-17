@@ -2,6 +2,8 @@ import Preloader from "@/src/components/Preloader";
 import "@/styles/globals.css";
 import "@/styles/header.css";
 import "@/public/assets/css/style.css";
+import "@/styles/quill.css";
+
 import { SessionProvider } from 'next-auth/react';
 import { boston } from "@/src/utils";
 
