@@ -27,10 +27,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/create.js"
     ],
-    "/email/[id]": [
+    "/dashboard": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/email/[id].js"
+      "static/chunks/pages/dashboard.js"
     ]
   },
   "ampFirstPages": []
