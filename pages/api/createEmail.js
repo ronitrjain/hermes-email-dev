@@ -1,5 +1,5 @@
  import OpenAI from "openai";
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 import EmailModel from "@/src/models/Email";
 
 
@@ -7,7 +7,6 @@ export default async function handler(req, res) {
     if (req.method === "POST") {
 
     try{
-        console.log("p1")
 
 
 const openai = new OpenAI({
@@ -19,12 +18,14 @@ const openai = new OpenAI({
  let {value:gpt_input, id} = req.body;
 
 
+
+
 let response = await openai.chat.completions.create({
   model: "gpt-4",
   messages: [
     {
       "role": "system",
-      "content": "You are an email newsletter writer. Please take the user's input and output a newsletter in html."
+      "content": "You are an email newsletter writer. Please take the user's input and output a newsletter. Surround the output with html tags."
     },
     {
       "role": "user",
@@ -38,7 +39,13 @@ let response = await openai.chat.completions.create({
   presence_penalty: 0,
 });
 
+
+
 let content= response.choices[0].message.content
+
+
+     await mongoose.connect(process.env.MONGO_URI)
+
 
 let email = new EmailModel({
     content: content,
@@ -50,6 +57,7 @@ let email = new EmailModel({
 })
 
 await email.save()
+
 
 
 

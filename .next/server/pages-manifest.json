@@ -2,7 +2,12 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
+  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
   "/dashboard": "pages/dashboard.js",
   "/create": "pages/create.js",
+  "/email/[id]": "pages/email/[id].js",
+  "/api/getEmail": "pages/api/getEmail.js",
+  "/api/sendEmail": "pages/api/sendEmail.js",
+  "/api/createEmail": "pages/api/createEmail.js",
   "/": "pages/index.js"
 }

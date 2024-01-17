@@ -25,7 +25,6 @@ const EmailUpload = () => {
   const { data: session, status } = useSession()
   const [error, setError] = useState("");
 
-  console.log(session)
 
 
 
@@ -38,10 +37,8 @@ const EmailUpload = () => {
       return;
     }
 
-    console.log(session)
 
     if(session && session.user && session.user.user_emails){
-      console.log(session)
         setEmails(session.user.user_emails)
     }
 
@@ -51,6 +48,12 @@ const EmailUpload = () => {
 }, [status])    
 
 async function dataHandler(rows, { startIndex }) {
+  console.log(rows)
+
+  if(rows.length <2){
+    return;
+  }
+
     let response = await fetch("/api/setEmails", {
         method: "POST",
         body: JSON.stringify({emails:rows, id: session.user.id}),

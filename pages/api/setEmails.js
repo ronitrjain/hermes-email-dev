@@ -15,24 +15,17 @@ export default async function handler(req, res) {
             return res.status(400).json({ success: false, data: "user not found" });
         }
 
-        
-
-
-        
-
+        console.log("this is emails" + emails)
+        console.log(emails)
 
         user.user_emails = emails;
 
 
-
-
         try {
-           console.log("user saving")
-
             await user.save();
             return res.status(200).json({ success: true, data: user });
         } catch (err) {
-            console.log(err)
+            console.log("there was an error saving")
             return res.status(400).json({ success: false, data: err });
         }
     } else {

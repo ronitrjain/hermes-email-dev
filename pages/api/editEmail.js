@@ -22,10 +22,9 @@ export default async function handler(req, res) {
         if(images == null || images == undefined){
             images = []
         }
-        console.log("the numebr of images is " + images.length)
 
 
-    
+
     
 
         aws.config.update({
@@ -66,16 +65,20 @@ let parsed = dataUriToBuffer(images[i]);
     mongoose.connect(process.env.MONGO_URI);
 
     //create new email on mongodb
-    let email = new EmailModel({
-        owner: id,
-        content: input,
-        sent: false,
-        subject: "Newsletter Draft",
-        date: Date.now(),
-        sent_to: [],
-        opened: []
-    });
+    //find the email by id
+    //update the email content
+    //save the email
+    //return the id
+
+    let email = await EmailModel.findById(id);
+    email.content = input;
     await email.save();
+    
+
+
+    
+
+
     res.status(200).json({ email_id: email._id.toString() });
 
 } catch (err) {
