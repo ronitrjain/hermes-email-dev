@@ -15,15 +15,12 @@ const Home = () => {
                 <span>Hello.</span>
               </h6>
               <h1>
-                We Have <br />
-                Design
+                We Create 
                 <br />
-                Experience
+                 Newsletters For You
               </h1>
               <p>
-                I design and develop services for customers of all sizes,
-                specializing in creating stylish, modern websites, web services
-                and online stores.
+                We utilize AI to create newsletters for your small business.
               </p>
               <div className="btn-bar">
                 <a className="px-btn px-btn-theme" href="#contactus">

@@ -44,7 +44,7 @@ export default async function handler(req, res) {
             from: user.org_email,
             to: email_to_send.email,
             subject: email.subject,
-            html: value
+            html: email.content
         };
          transporter.sendMail(mailOptions, function(error, info){
             if (error) {
