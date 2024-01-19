@@ -39,20 +39,29 @@ export default async function handler(req, res) {
 
     const sent_to = [];
 
+    let html = email.content 
+    let num_sent = 0;
+    let target = user.user_emails.length;
+
     for(let email_to_send of user.user_emails){
         let mailOptions = {
             from: user.org_email,
             to: email_to_send.email,
             subject: email.subject,
-            html: email.content
+            html: html
         };
          transporter.sendMail(mailOptions, function(error, info){
             if (error) {
+                num_sent++;
             } else {
               email.sent_to.push(email_to_send)
-                email.save();
+                num_sent++;
             }
         });
+    }
+
+    while(num_sent < target){
+        await new Promise(resolve => setTimeout(resolve, 1000));
     }
 
     

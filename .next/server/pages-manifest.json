@@ -2,12 +2,9 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/emailhistory": "pages/emailhistory.js",
-  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
-  "/api/getEmails": "pages/api/getEmails.js",
-  "/email/[id]": "pages/email/[id].js",
-  "/api/getEmail": "pages/api/getEmail.js",
+  "/": "pages/index.js",
   "/dashboard": "pages/dashboard.js",
-  "/logos": "pages/logos.js",
-  "/api/logo": "pages/api/logo.js"
+  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
+  "/contact": "pages/contact.js",
+  "/email/[id]": "pages/email/[id].js"
 }

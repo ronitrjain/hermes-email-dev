@@ -13,7 +13,7 @@ const Dashboard = () => {
   { id: 2, name: "Emails", icon: "fas fa-envelope", endpoint: "/emails"},
   { id: 3, name: "Email History", icon: "fas fa-history", endpoint: "/emailhistory" },
   { id: 4, name: "Logos", icon: "fas fa-shapes", endpoint: "/logos"},
-  { id: 5, name: "Analytics", icon: "fas fa-chart-line", endpoint: "/analytics" },
+  { id: 5, name: "Contact", icon: "fas fa-comments", endpoint: "/contact" },
   { id: 6, name: "Help", icon: "fas fa-info-circle", endpoint: "/help" },
 ];
     

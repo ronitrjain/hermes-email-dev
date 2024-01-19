@@ -12,15 +12,15 @@ const Home = () => {
           <div className="col-lg-6 pe-xl-5 py-5">
             <div className="home-intro one-page-nav">
               <h6>
-                <span>Hello.</span>
+                <span>HERMES.</span>
               </h6>
               <h1>
-                We Create 
+                Let Us Do
                 <br />
-                 Newsletters For You
+                 Your Newsletters.
               </h1>
               <p>
-                We utilize AI to create newsletters for your small business.
+               An affordable and cost effective way to send newsletters to your clients. 
               </p>
               <div className="btn-bar">
                 <a className="px-btn px-btn-theme" href="#contactus">
@@ -31,7 +31,7 @@ const Home = () => {
           </div>
           <div className="col-lg-6">
             <div className="home-image">
-              <img src="assets/img/home-banner.png" alt="image" />
+              <img src="/assets/img/example_newsletter.png" alt="image" />
             </div>
           </div>
         </div>

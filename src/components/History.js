@@ -59,7 +59,8 @@ const Portfolio = () => {
         <SectionTitle heading={"Email History"} subHeading={"Drafts"} />
         <div className="row g-4 lightbox-gallery">
           {emails.map((email) => (
-            <div className="col-sm-6 col-lg-4" key={email.id}>
+            <div className="col-sm-6 col-lg-4" key={email.id} >
+              
               <div className="portfolio-box">
                 <div className="portfolio-img">
                   <a href={"/email/"+email.id} className="gallery-link">
@@ -69,7 +70,7 @@ const Portfolio = () => {
                 <div className="portfolio-info">
                   <h6>{email.title}</h6>
                   <span>{new Date(email.date).toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) }</span>
-                  <a href={email.image} className="gallery-link">
+                  <a href={"/email/"+email.id} className="gallery-link">
                     <i className="fas fa-arrow-right" />
                   </a>
                 </div>

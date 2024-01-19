@@ -3,17 +3,16 @@ import { useState } from "react";
 import SectionTitle from "./SectionTitle";
 
 const contactInfo = [
-  { id: 1, label: "Phone", value: "+01 123 654 8096", icon: "fas fa-envelope" },
   {
     id: 2,
     label: "Mail",
-    value: "info@domainname.com",
-    icon: "fas fa-phone-alt",
+    value: "hermesdevelopergroup@gmail.com",
+    icon: "fas fa-envelope",
   },
   {
     id: 3,
-    label: "Visit My Studio",
-    value: "Warnwe Park Streetperrine, FL 33157 New York City",
+    label: "Our Mailing Address",
+    value: "11504 Peavey St, Glen Allen, VA 23059",
     icon: "fas fa-map-marker-alt",
   },
 ];
@@ -43,10 +42,10 @@ const Contact = () => {
     } else {
       emailjs
         .send(
-          "service_seruhwu", // service id
-          "template_21aw58z", // template id
+          "service_mqvtf26", // service id
+          "template_4wksium", // template id
           mailData,
-          "Q3pccdLZhU-mZT7tQ" // public api
+          "LRUSLuZx-z2ywMm_U" // public api
         )
         .then(
           (response) => {
@@ -171,9 +170,7 @@ const Contact = () => {
             <ul className="contact-infos">
               {contactInfo.map((contact) => (
                 <li key={contact.id}>
-                  <div className="icon">
-                    <i className={contact.icon} />
-                  </div>
+                  
                   <div className="col">
                     <h5>{contact.label}</h5>
                     <p>{contact.value}</p>

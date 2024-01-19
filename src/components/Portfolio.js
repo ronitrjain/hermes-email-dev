@@ -3,7 +3,7 @@ import SectionTitle from "./SectionTitle";
 const portfolioData = [
   {
     id: 1,
-    title: "Agency Landing page",
+    title: "Simple Newsletter",
     subtitle: "Web/WordPress",
     image: "assets/img/project-1.jpg",
   },
@@ -43,7 +43,7 @@ const Portfolio = () => {
   return (
     <section id="work" className="section work-section bg-gray">
       <div className="container">
-        <SectionTitle heading={"Latest Projects"} subHeading={"Portfolio"} />
+        <SectionTitle heading={"Design Ideas"} subHeading={"Designs"} />
         <div className="row g-4 lightbox-gallery">
           {portfolioData.map((portfolio) => (
             <div className="col-sm-6 col-lg-4" key={portfolio.id}>

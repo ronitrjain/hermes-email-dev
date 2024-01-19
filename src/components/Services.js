@@ -3,46 +3,46 @@ import SectionTitle from "./SectionTitle";
 const serviceData = [
   {
     id: 1,
-    name: "Web Design",
+    name: "Newsletter AI",
     icon: "bi bi-phone",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    desc: "Let our custom AI generate a newsletter for you based on your company's information.",
   },
   {
     id: 2,
-    name: "Development",
+    name: "Manage Your Newsletters",
     icon: "bi bi-laptop",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    desc: "View all of your newsletters in one place, edit them, and send them to your clients.",
   },
   {
     id: 3,
-    name: "SEO Marketing",
+    name: "Manage Your Mail List",
     icon: "bi bi-triangle",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    desc: "Add and remove emails from your mailing list and keep track of who you are sending to.",
   },
   {
     id: 4,
-    name: "Web Design",
+    name: "Automate Sending",
     icon: "bi bi-columns",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    desc: "Send to all of your clients at once, from one place. No more sending emails one by one.",
   },
   {
     id: 5,
-    name: "Development",
+    name: "Design Ideas",
     icon: "bi bi-distribute-vertical",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    desc: "Let our AI generate design ideas and take design ideas from our design gallery.",
   },
   {
     id: 6,
-    name: "SEO Marketing",
+    name: "Send to Multiple Platforms",
     icon: "bi bi-globe2",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    desc: "Send to multiple platforms at once, including Mailchimp, Gmail, GoDaddy, and Outlook.",
   },
 ];
 const Services = () => {
   return (
     <section id="services" className="section services-section bg-gray">
       <div className="container">
-        <SectionTitle heading={"Services I Offer"} subHeading={"Services"} />
+        <SectionTitle heading={"What We Offer"} subHeading={"Services"} />
         <div className="row gy-4">
           {serviceData.map((service) => (
             <div className="col-sm-6 col-lg-4" key={service.id}>
