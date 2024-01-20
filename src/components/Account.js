@@ -5,13 +5,15 @@ import {  signOut, useSession } from "next-auth/react";
 import { redirect, useRouter } from 'next/navigation'
 
 import { signIn } from "next-auth/react";
+import Message from "./Message";
+import { set } from "mongoose";
 
 const Account = () => {
     
 
 
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [message, setMessage] = useState("");
+  const [active, setActive] = useState(false);
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -61,12 +63,12 @@ const Account = () => {
             org_password.length === 0 ||
             service.length === 0
         ) {
-            setError("Fill all the fields properly.");
-            setSuccess("");
+            setMessage("Fill all the fields properly.");
+                        setActive(true);
+
             return;
         }
 
-           setSuccess("");
 
 
            //change test_button text to loading
@@ -92,8 +94,9 @@ const Account = () => {
         
 
             if (response.status == 400) {
-                setError("Invalid Credentials");
-                setSuccess("");
+                setMessage("There might be an account with this info already. Try other credentials.");
+                            setActive(true);
+
                 return;
             }
             else{
@@ -106,13 +109,12 @@ const Account = () => {
         session_user.corporation_password = org_password;
         session_user.service = service;
 
-        
-
 
         await update(session_user,  false);
 
-        setSuccess("You have successfully authenticated your email.");
-        setError("");
+        setMessage("You have successfully authenticated your email.");
+                    setActive(true);
+
         return ;
             }
 
@@ -155,12 +157,12 @@ const onSubmitInfo = async (e) => {
             username.length === 0 ||
             email.length === 0 
         ) {
-            setError("Fill all the fields properly.");
-           setSuccess("");
+            setMessage("Fill all the fields properly.");
+                        setActive(true);
+
 
             return;
         }
-        setError("");
 
         //set
 
@@ -179,8 +181,8 @@ const onSubmitInfo = async (e) => {
         });
 
         if(res.status ==400){
-            setError("There might be an account with this info already. Try other credentials.");
-            setSuccess("");
+            setMessage("There might be an account with this info already. Try other credentials.");
+            setActive(true);
             return;
         }
 
@@ -198,13 +200,12 @@ const onSubmitInfo = async (e) => {
         const result = await res.json();
 
         if (result.status == 400) {
-            setError("There might be an account with this info already. Try other credentials.");
-            setSuccess("");
-
+            setMessage("There might be an account with this info already. Try other credentials.");
+            setActive(true);
         } else {
-           setSuccess("You have successfully updated your info.");
-            setError("");
-         
+           setMessage("You have successfully updated your info.");
+                     setActive(true);
+
       
        }
            
@@ -222,6 +223,9 @@ let serviceValues = ["Gmail", "Yahoo", "Hotmail", "Mail.ru", "iCloud", "QQ", "Ou
 
   return (
     <section id="skill" className="section experience-section">
+        <Message message={message} active={active} >
+                <button onClick={(e)=>setActive(false)} className='px-btn px-btn-theme'>{message}</button>
+              </Message>
       <div className="container">
         <div className="row">
 
@@ -305,23 +309,7 @@ let serviceValues = ["Gmail", "Yahoo", "Hotmail", "Mail.ru", "iCloud", "QQ", "Ou
          
         </div>
 
-        <div className="row d-flex justify-content-center align-items-center">
-          <span
-                      id="success_message"
-                      className="text-success mt-3"
-                     
-                    >
-                      {success}
-                    </span>
-                      <span
-                      id="error_message"
-                      className="text-danger mt-3"
-                     
-                    >
-                      
-                      {error}
-                    </span>
-                    </div>
+      
       </div>
     </section>
   );

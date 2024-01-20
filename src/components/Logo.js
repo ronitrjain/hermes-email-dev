@@ -4,10 +4,8 @@ import { useState } from 'react';
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import Message from "./Message";
 import { set } from "mongoose";
-
-
-
 
 
 const Logo = () => {
@@ -16,8 +14,8 @@ const Logo = () => {
   const { data: session, status } = useSession()
       const [file, setFile] = useState();
             const { update } = useSession();
-            const [error, setError] = useState("");
-            const [success, setSuccess] = useState("");
+            const [message, setMessage] = useState("");
+  const [active, setActive] = useState(false);
 
 
        async function handleUpload(e) {
@@ -36,8 +34,9 @@ const Logo = () => {
       if(data.status == 200){
       data = await data.json()
       }else{
-        setError("There was an error uploading your logo. Please try again.")
-      setSuccess("")
+        setMessage("There was an error uploading your logo. Please try again.")
+        setActive(true)
+
 
         return;
       }
@@ -58,19 +57,20 @@ const Logo = () => {
       session.user.logo = data.image_destination;
 
       update(session.user, false);
-      setError("")
-      setSuccess("Logo successfully uploaded.")
+      
+      setMessage("Logo uploaded successfully.")
+      setActive(true)
       }
       else{
-        setError("There was an error uploading your logo. Please try again.")
-        setSuccess("")
+        setMessage("There was an error uploading your logo. Please try again.")
+        setActive(true)
         return;
       }
 
     }
     catch(e){
-      setError("There was an error uploading your logo. Please try again.")
-      setSuccess("")
+      setMessage("There was an error uploading your logo. Please try again.")
+        setActive(true)
       return;
     }
       
@@ -95,6 +95,9 @@ const Logo = () => {
 
  return (
   <section id="skill" className="section experience-section">
+     <Message message={message} active={active} >
+                <button onClick={(e)=>setActive(false)} className='px-btn px-btn-theme'>{message}</button>
+              </Message>
     <div className="container">
       <div className="row">
         <div className="col-12">
@@ -116,8 +119,7 @@ const Logo = () => {
           <div className="mt-2">
             <img src={file} className="img-fluid" style={{maxWidth: "10%", height: "auto"}} alt="Current Logo" />
           </div>
-          <span className="text-danger">{error}</span>
-           <span className="text-success">{success}</span>
+       
 
         </div>
       </div>

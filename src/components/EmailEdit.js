@@ -9,8 +9,7 @@ import { PuffLoader } from "react-spinners";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
-import { set } from "mongoose";
-
+import Message from "./Message";
 
 
 
@@ -19,8 +18,8 @@ const EmailEdit = (props) => {
     const [value, setValue] = useState('');
     let id = props.id;
     const { data: session, status } = useSession()
-    const [success, setSuccess] = useState("")
-    const [error, setError] = useState("")
+    const [message, setMessage] = useState("");
+    const [active, setActive] = useState(false);
 
     useEffect(() => {
         if (status == "unauthenticated") {
@@ -68,21 +67,20 @@ async function InputSend(){
 
 })
 if(res.status == 200){
-  setSuccess("Your Email has been Sent")
-  setError("")
+  setMessage("Your email has been sent")
+  setActive(true)
   
     return;
 }
 else{
-  setError("There was an error sending your email")
-  setSuccess("")
+  setMessage("There was an error sending your email")
+  setActive(true)
 }
 }
 
 async function InputSave(){
   //make save_button text say "loading" while this is happening
-  setError("")
-  setSuccess("")
+
     document.getElementById("puffloader").style.display = "block";
 
   document.getElementById("save_button").innerHTML = "Loading..."
@@ -103,16 +101,16 @@ async function InputSave(){
 
     if(res.status == 200){
       console.log("saved")
-      setSuccess("Your Draft has been saved")
-      setError("")
+      setMessage("Your draft has been saved")
+      setActive(true)
        document.getElementById("save_button").innerHTML = "Save"
   document.getElementById("save_button").disabled = false;
 
         return;
     }
     else{
-      setError("There was an error saving your draft")
-      setSuccess("")
+      setMessage("There was an error saving your draft")
+      setActive(true)
        document.getElementById("save_button").innerHTML = "Save"
   document.getElementById("save_button").disabled = false;
   return ;
@@ -176,6 +174,9 @@ const override = {
 
  return (
   <section id="skill" className="section experience-section">
+      <Message message={message} active={active} >
+                <button onClick={(e)=>setActive(false)} className='px-btn px-btn-theme'>{message}</button>
+              </Message>
     <div className="container">
       <div className="row">
         <div className="col-12">
@@ -195,8 +196,7 @@ const override = {
             <button id="save_button" onClick={InputSave} className="mt-4 form-control btn-lg px-btn px-btn-theme2"> Save </button>
             <button onClick={InputSend} className=" my-4 form-control btn-lg px-btn px-btn-theme"> Send </button>
 
-            <div className="text-success">{success}</div>
-            <div className="text-danger">{error}</div>
+        
 
 
 

@@ -2,9 +2,13 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/dashboard": "pages/dashboard.js",
   "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
-  "/contact": "pages/contact.js",
-  "/email/[id]": "pages/email/[id].js"
+  "/api/editEmail": "pages/api/editEmail.js",
+  "/api/sendEmail": "pages/api/sendEmail.js",
+  "/dashboard": "pages/dashboard.js",
+  "/": "pages/index.js",
+  "/create": "pages/create.js",
+  "/api/getEmail": "pages/api/getEmail.js",
+  "/email/[id]": "pages/email/[id].js",
+  "/contact": "pages/contact.js"
 }

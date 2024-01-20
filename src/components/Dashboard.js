@@ -3,10 +3,11 @@ import { useEffect, useState } from "react";
 import { signOut } from "next-auth/react"
 import { useSession } from "next-auth/react"
 import { useRouter } from 'next/navigation'
-import Link from "next/link";
 
 
 const Dashboard = () => {
+
+  let [active, setActive] = useState(true)
 
     const skillsData = [
   { id: 1, name: "Account", icon: "fas fa-cog", endpoint: "/account" },
@@ -52,6 +53,7 @@ const Dashboard = () => {
         return (
 
             <section id="work" className="section work-section bg-gray">
+            
       <div className="container">
         <SectionTitle heading={"Dashboard"} subHeading={"Your Info"} />
 

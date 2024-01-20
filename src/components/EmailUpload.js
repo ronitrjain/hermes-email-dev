@@ -5,8 +5,7 @@ import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import 'react-csv-importer/dist/index.css';
-import csvParser from "csv-parser";
-import { set } from "mongoose";
+import Message from "./Message";
 
 
 
@@ -23,7 +22,8 @@ const EmailUpload = () => {
 
 
   const { data: session, status } = useSession()
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [active, setActive] = useState(false);
 
 
 
@@ -64,12 +64,14 @@ async function dataHandler(rows, { startIndex }) {
 
     if(response.status == 200){
         setEmails(rows)
-        setError("")
         session.user.user_emails = rows;
         update(session.user, false)
+        setMessage("Emails uploaded successfully");
+        setActive(true);
     }
     else{
-        setError("There was an error uploading the emails.")
+        setMessage("Error uploading emails");
+        setActive(true);
     }
 
   }
@@ -83,6 +85,9 @@ async function dataHandler(rows, { startIndex }) {
 
   return (
     <section id="skill" className="section experience-section">
+       <Message message={message} active={active} >
+                <button onClick={(e)=>setActive(false)} className='px-btn px-btn-theme'>{message}</button>
+              </Message>
       <div className="container">
         <div className="row">
 
@@ -101,7 +106,6 @@ async function dataHandler(rows, { startIndex }) {
 
 <h3>Uploaded Emails</h3>
 
-<span className="text-danger">{error}</span>
 
 {emails.map((email) => (
     <p>{email.email}</p>

@@ -50,6 +50,7 @@ export default async function handler(req, res) {
             subject: email.subject,
             html: html
         };
+
          transporter.sendMail(mailOptions, function(error, info){
             if (error) {
                 num_sent++;

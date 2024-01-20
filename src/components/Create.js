@@ -5,9 +5,11 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import dynamic from 'next/dynamic'
 import { PuffLoader } from "react-spinners";
+import Message from "./Message";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
+import { set } from "mongoose";
 
 
 
@@ -15,7 +17,8 @@ import 'react-quill/dist/quill.snow.css';
 
 const Create = () => {
       const [value, setValue] = useState('');
-      const [error, setError] = useState('');
+      const [message, setMessage] = useState("");
+      const [active, setActive] = useState(false);
 
       const [images, setImages] = useState([]);
       const router = useRouter()
@@ -29,11 +32,12 @@ async function handleInput(input) {
 
 async function InputSubmit(){
   if(value == ""){
-    setError("Please enter a prompt.")
+    setMessage("Please enter a prompt.")
+    setActive(true)
     return;
   }
   //make create_button text say "loading" while this is happening
-  setError("")
+  
   document.getElementById("create_button").innerHTML = "Loading..."
   document.getElementById("create_button").disabled = true;
   document.getElementById("puffloader").style.display = "block";
@@ -51,7 +55,8 @@ async function InputSubmit(){
       
       document.getElementById("create_button").innerHTML = "Create"
   document.getElementById("create_button").disabled = false;
-      setError("There was an error creating your newsletter. Please try again.")
+      setMessage("There was an error creating your newsletter. Please try again.")
+      setActive(true)
       return;
     }
       
@@ -100,6 +105,9 @@ const override = {
 
  return (
   <section id="skill" className="section experience-section">
+     <Message message={message} active={active} >
+                <button onClick={(e)=>setActive(false)} className='px-btn px-btn-theme'>{message}</button>
+              </Message>
     <div className="container">
       <div className="row">
         <div className="col-12">
@@ -118,7 +126,6 @@ const override = {
 
               <button id="create_button" onClick={InputSubmit} className="form-control btn-lg px-btn px-btn-theme2"> Create </button>
 
-              <p className="text-danger my-3">{error}</p>
 
 
       
