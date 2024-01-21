@@ -161,6 +161,12 @@ a:hover {
 .container {
   max-width: 1230px;
 }
+.drag-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
 
 /* ----------------------
 *   Loading

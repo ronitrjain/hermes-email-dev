@@ -19,7 +19,7 @@ const Index = () => {
       {/* Main */}
       <main className="wrapper">
 
-        
+
         <DragDrop />
       
         {/* End Contact Section */}

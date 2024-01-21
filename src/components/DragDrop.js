@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
+
+
+
 // Fake data generator
 const getItems = (count) =>
   Array.from({ length: count }, (v, k) => k).map((k) => ({
@@ -68,6 +71,8 @@ class App extends Component {
 
   render() {
     return (
+    <section id="work" className="section work-section bg-gray">
+        <div className="drag-container">
       <DragDropContext onDragEnd={this.onDragEnd}>
         <Droppable droppableId="droppable">
           {(provided, snapshot) => (
@@ -130,6 +135,8 @@ class App extends Component {
           )}
         </Droppable>
       </DragDropContext>
+      </div>
+      </section>
     );
   }
 }
