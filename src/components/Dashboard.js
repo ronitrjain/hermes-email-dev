@@ -16,6 +16,7 @@ const Dashboard = () => {
   { id: 4, name: "Logos", icon: "fas fa-shapes", endpoint: "/logos"},
   { id: 5, name: "Contact", icon: "fas fa-comments", endpoint: "/contact" },
   { id: 6, name: "Help", icon: "fas fa-info-circle", endpoint: "/help" },
+  { id: 7, name: "Edit", icon: "fas fa-envelope", endpoint: "/edit"}
 ];
     
         const { data: session, status } = useSession()
