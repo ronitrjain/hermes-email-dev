@@ -1,144 +1,118 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import SectionTitle from "./SectionTitle";
+import {useState} from "react"
+const serviceData = [
+  {
+    id: 1,
+    name: "Hey Moksh,",
+    imageUrl: "https://ci3.googleusercontent.com/meips/ADKq_NZoNSsoeca5R2ZpTjzU_Hqc43Te1lWRCPqEyKFsR4hpWr-Z3yQ0bj0_as8Qrs6r8tlw7rIh5UsZ-ScBTfj2KplVDdSHoLYw3aVpTfjVokSIbnP3aWd6jCnXkvAv=s0-d-e1-ft#https://news.bundesliga.com/imgproxy/img/2041575200/xavi_wittz_600.jpg", // Update with actual image path
+    desc: "Subplots abound when RB Leipzig host Bundesliga leaders Bayer Leverkusen in Matchday 18's headline fixture on Saturday. Can Leipzig get back on track? Will Leverkusen stay unbeaten? Who will win out between respective December Rookie and Player of the Month winners Xavi and Florian Wirtz? You do not want to miss it!"
+  },
+  // ... other services
+];
 
+const DragDrop = () => {
+  const [services, setServices] = useState(serviceData);
+  const [editServiceId, setEditServiceId] = useState(null);
 
+  const addNewBox = () => {
+    const newId = services.length + 1;
+    const newService = {
+      id: newId,
+      name: `New Service ${newId}`,
+      imageUrl: "path/to/default/image.jpg", // Provide a default image path
+      desc: "Description of new service.",
+    };
+    setServices([...services, newService]);
+  };
 
+  const deleteService = (id) => {
+    setServices(services.filter(service => service.id !== id));
+  };
+  
 
-// Fake data generator
-const getItems = (count) =>
-  Array.from({ length: count }, (v, k) => k).map((k) => ({
-    id: `item-${k}`,
-    imageURL:
-      "https://ci3.googleusercontent.com/meips/ADKq_NZoNSsoeca5R2ZpTjzU_Hqc43Te1lWRCPqEyKFsR4hpWr-Z3yQ0bj0_as8Qrs6r8tlw7rIh5UsZ-ScBTfj2KplVDdSHoLYw3aVpTfjVokSIbnP3aWd6jCnXkvAv=s0-d-e1-ft#https://news.bundesliga.com/imgproxy/img/2041575200/xavi_wittz_600.jpg", // Ensure this key is consistent with the usage in the render method
-    header: "Hey Moksh,",
-    content:
-      "Subplots abound when RB Leipzig host Bundesliga leaders Bayer Leverkusen in Matchday 18's headline fixture on Saturday. Can Leipzig get back on track? Will Leverkusen stay unbeaten? Who will win out between respective December Rookie and Player of the Month winners Xavi and Florian Wirtz? You do not want to miss it!",
-  }));
+  const handleServiceUpdate = (id, field, value) => {
+    setServices(services.map(service => {
+      if (service.id === id) {
+        return { ...service, [field]: value };
+      }
+      return service;
+    }));
+  };
 
-// Function to reorder the result
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
+  const toggleEditMode = (id) => {
+    setEditServiceId(editServiceId === id ? null : id);
+  };
 
-  return result;
+  return (
+    <section id="services" className="section services-section bg-gray">
+      <div className="container">
+        <SectionTitle heading={"What We Offer"} subHeading={"Services"} />
+        <div className="row gy-4">
+          {services.map((service) => (
+            <div className="col-12 centered-col" key={service.id}>
+              <div className="feature-box-01" style={{ textAlign: 'center', height: '568px', position: 'relative' }}>
+              <button 
+  onClick={() => deleteService(service.id)}
+  style={{
+    position: 'absolute',
+    top: '10px',
+    right: '10px',
+    border: 'none',
+    background: 'none',
+    cursor: 'pointer',
+    fontSize: '20px',
+  }}
+>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
+    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+  </svg>
+</button>
+
+                <img 
+                  src={service.imageUrl} 
+                  alt={service.name} 
+                  style={{ 
+                    width: '600px', 
+                    height: '300px', 
+                    objectFit: 'cover',
+                    display: 'block',
+                    margin: '0 auto'
+                  }} 
+                  className="image-full"
+                />
+                <div className="feature-content">
+                  <h5
+                    contentEditable
+                    onBlur={(e) => handleServiceUpdate(service.id, 'name', e.target.innerText)}
+                    style={{ paddingTop: '20px' }}
+                  >
+                    {service.name}
+                  </h5>
+                  <p
+                    contentEditable
+                    onBlur={(e) => handleServiceUpdate(service.id, 'desc', e.target.innerText)}
+                    style={{ paddingTop: '10px' }}
+                  >
+                    {service.desc}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <button 
+            onClick={addNewBox} 
+            className="px-btn px-btn-theme"
+          >
+            Add New Box
+          </button>
+        </div>
+      </div>
+    </section>
+  );
 };
 
-const grid = 8;
 
-const getItemStyle = (isDragging, draggableStyle, height = 568) => ({
-  // Styles for each item
-  userSelect: "none",
-  padding: grid,
-  height: `${height}px`,
-  margin: `0 0 ${grid}px 0`,
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "flex-start", // Align items to the start vertically
-  alignItems: "flex-start", // Align items to the start horizontally
-  background: isDragging ? "lightgreen" : "white",
-  ...draggableStyle,
-});
-
-const getListStyle = (isDraggingOver) => ({
-  background: isDraggingOver ? "lightblue" : "lightgrey",
-  padding: grid,
-  width: 600,
-});
-
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      items: getItems(10),
-    };
-    this.onDragEnd = this.onDragEnd.bind(this);
-  }
-
-  onDragEnd(result) {
-    if (!result.destination) {
-      return;
-    }
-
-    const items = reorder(
-      this.state.items,
-      result.source.index,
-      result.destination.index
-    );
-    this.setState({ items });
-  }
-
-  render() {
-    return (
-    <section id="work" className="section work-section bg-gray">
-        <div className="drag-container">
-      <DragDropContext onDragEnd={this.onDragEnd}>
-        <Droppable droppableId="droppable">
-          {(provided, snapshot) => (
-            <div
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-              style={getListStyle(snapshot.isDraggingOver)}
-            >
-              {this.state.items.map((item, index) => (
-                <Draggable key={item.id} draggableId={item.id} index={index}>
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      style={getItemStyle(
-                        snapshot.isDragging,
-                        provided.draggableProps.style
-                      )}
-                    >
-                      <img
-                        src={item.imageURL} // Make sure this matches the key in getItems
-                        alt={`Item ${index}`}
-                        style={{
-                          width: "100%",
-                          height: "auto",
-                          maxHeight: "300px",
-                        }}
-                      />
-                      <div style={{ textAlign: "center", width: "100%" }}>
-                        {" "}
-                        {/* Centered text container */}
-                        <h2
-                          style={{
-                            marginTop: "38px 0",
-                            marginBottom: "20px 0",
-                          }}
-                        >
-                          {item.header}
-                        </h2>
-                        <p
-                          style={{
-                            fontFamily: "DFL-Rg, sans-serif",
-                            fontSize: "16px",
-                            textAlign: "left",
-                            lineHeight: "26px",
-                            padding: "0px 50px",
-                            color: "rgb(100,104,108)",
-                          }}
-                        >
-                          {item.content}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-      </div>
-      </section>
-    );
-  }
-}
-
-export default App; // Exporting the correct component
+export default DragDrop;
