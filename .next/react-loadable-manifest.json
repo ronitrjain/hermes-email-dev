@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "../src/components/Create.js -> react-quill": {
     "id": "../src/components/Create.js -> react-quill",
@@ -6,3 +7,6 @@
     ]
   }
 }
+=======
+{}
+>>>>>>> df5a928cf7dffbb27cdb5d91aee505292a37c7bb
