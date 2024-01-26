@@ -1,5 +1,6 @@
 import SectionTitle from "./SectionTitle";
 import {useState} from "react"
+import axios from "axios"
 const serviceData = [
   {
     id: 1,
@@ -13,6 +14,7 @@ const serviceData = [
 const DragDrop = () => {
   const [services, setServices] = useState(serviceData);
   const [editServiceId, setEditServiceId] = useState(null);
+  const [input, setInput] = useState('')
 
   const addNewBox = () => {
     const newId = services.length + 1;
@@ -29,6 +31,20 @@ const DragDrop = () => {
     setServices(services.filter(service => service.id !== id));
   };
   
+  const getResponse = async () => {
+    try {
+        const response = await axios.post('/api/your-endpoint', {
+            gpt_input: input,
+            id: 'user-id' // Replace with actual user ID or relevant identifier
+        });
+
+        console.log('Response:', response.data);
+        // Handle the response as needed
+    } catch (error) {
+        console.error('Error:', error);
+        // Handle the error as needed
+    }
+};
 
   const handleServiceUpdate = (id, field, value) => {
     setServices(services.map(service => {
@@ -46,7 +62,7 @@ const DragDrop = () => {
   return (
     <section id="services" className="section services-section bg-gray">
       <div className="container">
-        <SectionTitle heading={"What We Offer"} subHeading={"Services"} />
+        <SectionTitle heading={"Your Newsletter"} subHeading={"Services"} />
         <div className="row gy-4">
           {services.map((service) => (
             <div className="col-12 centered-col" key={service.id}>

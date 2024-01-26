@@ -25,7 +25,7 @@ let response = await openai.chat.completions.create({
   messages: [
     {
       "role": "system",
-      "content": "You are an email newsletter writer. Please take the user's input and output a newsletter. Surround the output with html tags."
+      "content": "You are an email newsletter writer. Please take the user's input and output a personalized header and a medium-length newsletter to fit the user's query in a dictonary form. Example: User: Create a newsletter for my NFL store that is offering a 15% discount. Assistant: {'header': ''. 'paragraph': {insert content here}}'
     },
     {
       "role": "user",
